@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import ServiceCard from "@/components/ServiceCard";
 import SkillBar from "@/components/SkillBar";
@@ -11,7 +13,44 @@ import dataImg from '@assets/stock_images/modern_data_analytic_8270b338.jpg';
 import aiImg from '@assets/stock_images/artificial_intellige_2dcb513b.jpg';
 import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg';
 
+const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"] as const;
+type Category = typeof CATEGORIES[number];
+
+const ALL_PROJECTS = [
+  {
+    title: "AirBnB Price Prediction",
+    description: "ML model predicting AirBnB prices with 85% accuracy using regression techniques and feature engineering.",
+    image: dataImg,
+    category: "MACHINE LEARNING" as const,
+    technologies: ["Python", "Scikit-learn", "Pandas"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+  },
+  {
+    title: "Document Q&A with RAG",
+    description: "Intelligent chatbot using Retrieval-Augmented Generation to answer questions from PDFs. 90% relevance achieved.",
+    image: aiImg,
+    category: "GENERATIVE AI" as const,
+    technologies: ["LangChain", "ChromaDB", "OpenAI"],
+    githubUrl: "https://github.com",
+  },
+  {
+    title: "Customer Segmentation",
+    description: "Clustering analysis for customer segmentation using K-means and behavioral data analytics.",
+    image: pipelineImg,
+    category: "DATA ANALYTICS" as const,
+    technologies: ["Python", "Tableau", "SQL"],
+    liveUrl: "https://example.com",
+  },
+];
+
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<Category>("ALL");
+
+  const filteredProjects = selectedCategory === "ALL" 
+    ? ALL_PROJECTS 
+    : ALL_PROJECTS.filter(project => project.category === selectedCategory);
+
   return (
     <div className="space-y-16 pb-16">
       <section id="home" className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16">
@@ -145,32 +184,36 @@ export default function Home() {
         <p className="text-muted-foreground mb-8 max-w-3xl">
           Explore my projects where I apply my technical skills to develop practical solutions. I aim to showcase my ability to implement innovative solutions and drive tangible results. These experiences empower me to tackle complex real-world challenges effectively.
         </p>
+        
+        <div className="flex flex-wrap gap-3 mb-8">
+          {CATEGORIES.map((category) => (
+            <Badge
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              className={`cursor-pointer text-xs uppercase tracking-wide px-4 py-2 hover-elevate active-elevate-2 ${
+                selectedCategory === category ? "toggle-elevate toggle-elevated" : "toggle-elevate"
+              }`}
+              onClick={() => setSelectedCategory(category)}
+              data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-')}`}
+            >
+              {category}
+            </Badge>
+          ))}
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProjectCard
-            title="AirBnB Price Prediction"
-            description="ML model predicting AirBnB prices with 85% accuracy using regression techniques and feature engineering."
-            image={dataImg}
-            category="Machine Learning"
-            technologies={["Python", "Scikit-learn", "Pandas"]}
-            githubUrl="https://github.com"
-            liveUrl="https://example.com"
-          />
-          <ProjectCard
-            title="Document Q&A with RAG"
-            description="Intelligent chatbot using Retrieval-Augmented Generation to answer questions from PDFs. 90% relevance achieved."
-            image={aiImg}
-            category="Generative AI"
-            technologies={["LangChain", "ChromaDB", "OpenAI"]}
-            githubUrl="https://github.com"
-          />
-          <ProjectCard
-            title="Customer Segmentation"
-            description="Clustering analysis for customer segmentation using K-means and behavioral data analytics."
-            image={pipelineImg}
-            category="Data Analytics"
-            technologies={["Python", "Tableau", "SQL"]}
-            liveUrl="https://example.com"
-          />
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.title}
+              title={project.title}
+              description={project.description}
+              image={project.image}
+              category={project.category}
+              technologies={project.technologies}
+              githubUrl={project.githubUrl}
+              liveUrl={project.liveUrl}
+            />
+          ))}
         </div>
       </section>
 
