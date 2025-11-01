@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ServiceCard from "@/components/ServiceCard";
@@ -64,8 +64,31 @@ const fadeIn = {
   visible: { opacity: 1, y: 0 }
 };
 
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+// Section heading component with blue underline (like Rohan's portfolio)
+const SectionHeading = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="text-3xl font-bold mb-8 inline-block">
+    {children}
+    <span className="block h-1 w-16 bg-primary mt-2"></span>
+  </h2>
+);
+
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("ALL");
+  const { scrollY } = useScroll();
+  
+  // Parallax effect - background moves slower than content
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const filteredProjects = selectedCategory === "ALL" 
     ? ALL_PROJECTS 
@@ -81,44 +104,80 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-16 pb-16">
+    <div className="space-y-12 pb-16">
+      {/* Hero Section - Shorter with parallax and scroll indicator */}
       <motion.section 
         id="home" 
-        className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16"
+        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden px-6 py-12"
         initial="hidden"
         animate="visible"
         variants={fadeIn}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-4xl text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+        {/* Parallax background with gradient */}
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5"
+          style={{ y: heroY, opacity: heroOpacity }}
+        />
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl text-center space-y-6">
+          <motion.h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             Navkaran Singh<span className="text-primary">_</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground">
+          </motion.h1>
+          
+          <motion.p 
+            className="text-xl md:text-2xl text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             A passionate{" "}
             <span className="text-primary font-semibold">
               <TypingText
                 phrases={["Data Analyst", "Data Engineer", "Data Scientist", "ML Engineer"]}
               />
             </span>
-          </p>
-          <Button size="lg" className="mt-6" onClick={handleDownloadCV} data-testid="button-download-cv">
-            <Download className="w-4 h-4 mr-2" />
-            DOWNLOAD CV
-          </Button>
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <Button size="lg" className="mt-6" onClick={handleDownloadCV} data-testid="button-download-cv">
+              <Download className="w-4 h-4 mr-2" />
+              DOWNLOAD CV
+            </Button>
+          </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <ChevronDown className="w-6 h-6 text-primary opacity-50" />
+        </motion.div>
       </motion.section>
 
+      {/* About Section with divider */}
       <motion.section 
         id="about" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-8">Hello<span className="text-primary">_</span></h2>
+        <SectionHeading>Hello<span className="text-primary">_</span></SectionHeading>
         <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
           <p>
             I'm <strong className="text-foreground">Navkaran</strong>, a data professional with <strong className="text-foreground">4+ years of experience</strong> turning complex problems into actionable insights.
@@ -132,17 +191,21 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Services Section */}
       <motion.section 
         id="services" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-8">How I Create Impact<span className="text-primary">_</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <SectionHeading>How I Create Impact<span className="text-primary">_</span></SectionHeading>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+        >
           <ServiceCard
             icon={BarChart3}
             title="Data Analysis & Visualization"
@@ -179,19 +242,20 @@ export default function Home() {
             description="Running A/B tests, analyzing metrics, and translating results into actionable strategy."
             tools={["A/B Testing", "Statistics", "Google Analytics", "Mixpanel"]}
           />
-        </div>
+        </motion.div>
       </motion.section>
 
+      {/* Skills Section */}
       <motion.section 
         id="skills" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-12">Skills<span className="text-primary">_</span></h2>
+        <SectionHeading>Skills<span className="text-primary">_</span></SectionHeading>
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
             <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-6">
@@ -239,16 +303,17 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Portfolio Section */}
       <motion.section 
         id="portfolio" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-8">Portfolio<span className="text-primary">_</span></h2>
+        <SectionHeading>Portfolio<span className="text-primary">_</span></SectionHeading>
         <p className="text-muted-foreground mb-8 max-w-3xl">
           Explore my projects where I apply my technical skills to develop practical solutions. I aim to showcase my ability to implement innovative solutions and drive tangible results. These experiences empower me to tackle complex real-world challenges effectively.
         </p>
@@ -269,7 +334,11 @@ export default function Home() {
           ))}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          key={selectedCategory}
+        >
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.title}
@@ -282,19 +351,20 @@ export default function Home() {
               liveUrl={project.liveUrl}
             />
           ))}
-        </div>
+        </motion.div>
       </motion.section>
 
+      {/* Resume Section */}
       <motion.section 
         id="resume" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-12">Resume<span className="text-primary">_</span></h2>
+        <SectionHeading>Resume<span className="text-primary">_</span></SectionHeading>
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-8">
@@ -367,15 +437,17 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Contact Section */}
       <motion.section 
         id="contact" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
+        <SectionHeading>Get in Touch<span className="text-primary">_</span></SectionHeading>
         <ContactForm
           email="navkarancad@gmail.com"
           phone="+1 (514) 804-1045"
