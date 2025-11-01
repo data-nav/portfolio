@@ -17,49 +17,48 @@ import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg'
 const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"] as const;
 type Category = typeof CATEGORIES[number];
 
-// 🎯 PROJECT TEMPLATE - ADD YOUR PROJECTS HERE
-// Just copy this template and fill in your details!
+// 🚀 YOUR PRODUCTION-READY AI PROJECTS
 const ALL_PROJECTS = [
   {
-    title: "AirBnB Price Prediction",
-    description: "ML model predicting AirBnB prices with 85% accuracy using regression techniques and feature engineering.",
-    image: dataImg, // Replace with your project image path
-    category: "MACHINE LEARNING" as const,
-    technologies: ["Python", "Scikit-learn", "Pandas"],
-    githubUrl: "https://github.com/yourusername/airbnb-prediction", // 👈 Add your GitHub URL
-    liveUrl: "https://your-project-demo.com", // 👈 Add demo URL (optional)
-  },
-  {
-    title: "Document Q&A with RAG",
-    description: "Intelligent chatbot using Retrieval-Augmented Generation to answer questions from PDFs. 90% relevance achieved.",
+    title: "Multi-Agent Content Pipeline",
+    description: "Production-grade multi-agent system transforming PRDs into polished blog posts using 4 chained AI agents with fact-checking and rollback capabilities.",
     image: aiImg,
     category: "GENERATIVE AI" as const,
-    technologies: ["LangChain", "ChromaDB", "OpenAI"],
-    githubUrl: "https://github.com/yourusername/doc-qa-rag", // 👈 Add your GitHub URL
-    // liveUrl: undefined, // 👈 Leave undefined if no live demo
+    technologies: ["LangChain", "Next.js", "Supabase", "OpenAI"],
+    githubUrl: "https://github.com/data-nav/multi-agent-content-ops", // 👈 Update after creating repo
   },
   {
-    title: "Customer Segmentation",
-    description: "Clustering analysis for customer segmentation using K-means and behavioral data analytics.",
+    title: "Drift-Aware Retraining Pipeline",
+    description: "MLOps pipeline detecting embedding drift and performance degradation, automatically triggering model retraining to maintain 95%+ accuracy.",
+    image: dataImg,
+    category: "MACHINE LEARNING" as const,
+    technologies: ["Python", "Prometheus", "Grafana", "pgvector"],
+    githubUrl: "https://github.com/data-nav/drift-aware-retraining", // 👈 Update after creating repo
+  },
+  {
+    title: "AI Model Router with Budget Control",
+    description: "Intelligent routing system optimizing cost vs quality by directing queries to appropriate models (GPT-3.5/4), reducing costs by 60% while maintaining performance.",
     image: pipelineImg,
     category: "DATA ANALYTICS" as const,
-    technologies: ["Python", "Tableau", "SQL"],
-    // githubUrl: undefined, // 👈 Leave undefined if repo is private
-    liveUrl: "https://your-tableau-dashboard.com",
+    technologies: ["Node.js", "OpenAI", "Claude", "PostgreSQL"],
+    githubUrl: "https://github.com/data-nav/model-router-budget", // 👈 Update after creating repo
   },
-  
-  // 🚀 TO ADD MORE PROJECTS, COPY THIS TEMPLATE:
-  /*
   {
-    title: "Your Project Name",
-    description: "Short description of what your project does and its key achievements.",
-    image: dataImg, // Use dataImg, aiImg, or pipelineImg, or add your own image
-    category: "MACHINE LEARNING", // Must be one of: "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"
-    technologies: ["Tech1", "Tech2", "Tech3"], // List main technologies used
-    githubUrl: "https://github.com/yourusername/project-repo", // Optional: your GitHub repo
-    liveUrl: "https://your-live-demo.com", // Optional: live demo link
+    title: "Guardrail & Red-Team Harness",
+    description: "Adversarial testing framework stress-testing AI systems with automated red-team prompts, measuring jailbreak success rates and guardrail effectiveness.",
+    image: aiImg,
+    category: "GENERATIVE AI" as const,
+    technologies: ["Python", "FastAPI", "Supabase", "Moderation API"],
+    githubUrl: "https://github.com/data-nav/guardrail-red-team", // 👈 Update after creating repo
   },
-  */
+  {
+    title: "Evaluation-as-a-Service Platform",
+    description: "CI/CD-integrated eval platform with automated rubric scoring, experiment tracking, and deployment blocking for below-threshold model performance.",
+    image: pipelineImg,
+    category: "FULL-STACK" as const,
+    technologies: ["Next.js", "Python", "Supabase", "CI/CD"],
+    githubUrl: "https://github.com/data-nav/eval-as-a-service", // 👈 Update after creating repo
+  },
 ];
 
 // Simple fade-in animation
@@ -126,7 +125,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl font-bold mb-8">Hi<span className="text-primary">_</span></h2>
+        <h2 className="text-3xl font-bold mb-8">Hello<span className="text-primary">_</span></h2>
         <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
           <p>
             I'm <strong className="text-foreground">Navkaran</strong>, a data professional with <strong className="text-foreground">4+ years of experience</strong> turning complex problems into actionable insights.
