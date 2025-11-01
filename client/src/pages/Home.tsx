@@ -13,11 +13,9 @@ import dataImg from '@assets/stock_images/modern_data_analytic_8270b338.jpg';
 import aiImg from '@assets/stock_images/artificial_intellige_2dcb513b.jpg';
 import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg';
 
-// 🎯 Updated categories - FULL-STACK changed to COMPUTER VISION
 const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "COMPUTER VISION"] as const;
 type Category = typeof CATEGORIES[number];
 
-// 🚀 YOUR 5 PRODUCTION-READY AI PROJECTS
 const ALL_PROJECTS = [
   {
     title: "Multi-Agent Content Pipeline",
@@ -61,20 +59,9 @@ const ALL_PROJECTS = [
   },
 ];
 
-// 🎨 Smoother animations
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
 };
 
 export default function Home() {
@@ -84,7 +71,6 @@ export default function Home() {
     ? ALL_PROJECTS 
     : ALL_PROJECTS.filter(project => project.category === selectedCategory);
 
-  // 📄 CV Download Handler
   const handleDownloadCV = () => {
     const link = document.createElement('a');
     link.href = '/Navkaran_Singh_Resume.pdf';
@@ -96,7 +82,6 @@ export default function Home() {
 
   return (
     <div className="space-y-16 pb-16">
-      {/* Hero Section */}
       <motion.section 
         id="home" 
         className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16"
@@ -124,13 +109,12 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* About Section */}
       <motion.section 
         id="about" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -148,21 +132,17 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Services Section */}
       <motion.section 
         id="services" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-3xl font-bold mb-8">How I Create Impact<span className="text-primary">_</span></h2>
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={staggerContainer}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ServiceCard
             icon={BarChart3}
             title="Data Analysis & Visualization"
@@ -199,16 +179,15 @@ export default function Home() {
             description="Running A/B tests, analyzing metrics, and translating results into actionable strategy."
             tools={["A/B Testing", "Statistics", "Google Analytics", "Mixpanel"]}
           />
-        </motion.div>
+        </div>
       </motion.section>
 
-      {/* Skills Section */}
       <motion.section 
         id="skills" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -260,13 +239,12 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Portfolio Section */}
       <motion.section 
         id="portfolio" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -291,11 +269,7 @@ export default function Home() {
           ))}
         </div>
         
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={staggerContainer}
-          key={selectedCategory}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.title}
@@ -308,16 +282,15 @@ export default function Home() {
               liveUrl={project.liveUrl}
             />
           ))}
-        </motion.div>
+        </div>
       </motion.section>
 
-      {/* Resume Section */}
       <motion.section 
         id="resume" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -394,13 +367,12 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Contact Section */}
       <motion.section 
         id="contact" 
-        className="container max-w-6xl px-6 scroll-mt-20"
+        className="container max-w-6xl px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
