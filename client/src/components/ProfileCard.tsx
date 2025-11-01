@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
@@ -6,9 +6,6 @@ interface ProfileCardProps {
   name: string;
   title: string;
   imageSrc: string;
-  email: string;
-  phone: string;
-  location: string;
   githubUrl?: string;
   linkedinUrl?: string;
   tableauUrl?: string;
@@ -18,9 +15,6 @@ export default function ProfileCard({
   name,
   title,
   imageSrc,
-  email,
-  phone,
-  location,
   githubUrl,
   linkedinUrl,
   tableauUrl,
@@ -34,21 +28,6 @@ export default function ProfileCard({
       
       <h2 className="text-xl font-bold text-sidebar-foreground mb-1">{name}</h2>
       <p className="text-sm text-muted-foreground mb-4">{title}</p>
-      
-      <div className="w-full space-y-2 text-left text-sm mb-4">
-        <div className="flex items-start gap-2">
-          <Phone className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-          <span className="text-sidebar-foreground">{phone}</span>
-        </div>
-        <div className="flex items-start gap-2">
-          <Mail className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-          <span className="text-sidebar-foreground break-all">{email}</span>
-        </div>
-        <div className="flex items-start gap-2">
-          <MapPin className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-          <span className="text-sidebar-foreground">{location}</span>
-        </div>
-      </div>
       
       <div className="flex gap-2">
         {githubUrl && (

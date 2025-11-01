@@ -39,23 +39,36 @@ export default function ContactForm({ email, phone, location }: ContactFormProps
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log("Form submitted:", data);
     
+    // Create mailto link with pre-filled data
+    const subject = `Portfolio Contact from ${data.name}`;
+    const body = `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`;
+    
+    // Encode for URL
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open default email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
     toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
+      title: "Opening your email client...",
+      description: "Your message has been prepared. Just hit send!",
     });
     
-    form.reset();
-    setIsSubmitting(false);
+    // Reset form after a short delay
+    setTimeout(() => {
+      form.reset();
+      setIsSubmitting(false);
+    }, 1000);
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-8">
+    <>
+      <h2 className="text-3xl font-bold mb-8">Get in Touch<span className="text-primary">_</span></h2>
+      <div className="grid md:grid-cols-2 gap-8">
       <Card>
         <CardHeader>
-          <CardTitle>Get in Touch</CardTitle>
           <CardDescription>
             Whether you have questions or just want to chat about exciting opportunities, I'm all ears. Let's connect and make great things happen together!
           </CardDescription>
@@ -160,12 +173,13 @@ export default function ContactForm({ email, phone, location }: ContactFormProps
                 disabled={isSubmitting}
                 data-testid="button-send"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Opening Email..." : "Send Message"}
               </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }

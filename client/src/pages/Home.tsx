@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,15 +17,17 @@ import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg'
 const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"] as const;
 type Category = typeof CATEGORIES[number];
 
+// 🎯 PROJECT TEMPLATE - ADD YOUR PROJECTS HERE
+// Just copy this template and fill in your details!
 const ALL_PROJECTS = [
   {
     title: "AirBnB Price Prediction",
     description: "ML model predicting AirBnB prices with 85% accuracy using regression techniques and feature engineering.",
-    image: dataImg,
+    image: dataImg, // Replace with your project image path
     category: "MACHINE LEARNING" as const,
     technologies: ["Python", "Scikit-learn", "Pandas"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://example.com",
+    githubUrl: "https://github.com/yourusername/airbnb-prediction", // 👈 Add your GitHub URL
+    liveUrl: "https://your-project-demo.com", // 👈 Add demo URL (optional)
   },
   {
     title: "Document Q&A with RAG",
@@ -32,7 +35,8 @@ const ALL_PROJECTS = [
     image: aiImg,
     category: "GENERATIVE AI" as const,
     technologies: ["LangChain", "ChromaDB", "OpenAI"],
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/yourusername/doc-qa-rag", // 👈 Add your GitHub URL
+    // liveUrl: undefined, // 👈 Leave undefined if no live demo
   },
   {
     title: "Customer Segmentation",
@@ -40,9 +44,29 @@ const ALL_PROJECTS = [
     image: pipelineImg,
     category: "DATA ANALYTICS" as const,
     technologies: ["Python", "Tableau", "SQL"],
-    liveUrl: "https://example.com",
+    // githubUrl: undefined, // 👈 Leave undefined if repo is private
+    liveUrl: "https://your-tableau-dashboard.com",
   },
+  
+  // 🚀 TO ADD MORE PROJECTS, COPY THIS TEMPLATE:
+  /*
+  {
+    title: "Your Project Name",
+    description: "Short description of what your project does and its key achievements.",
+    image: dataImg, // Use dataImg, aiImg, or pipelineImg, or add your own image
+    category: "MACHINE LEARNING", // Must be one of: "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"
+    technologies: ["Tech1", "Tech2", "Tech3"], // List main technologies used
+    githubUrl: "https://github.com/yourusername/project-repo", // Optional: your GitHub repo
+    liveUrl: "https://your-live-demo.com", // Optional: live demo link
+  },
+  */
 ];
+
+// Simple fade-in animation
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("ALL");
@@ -51,9 +75,28 @@ export default function Home() {
     ? ALL_PROJECTS 
     : ALL_PROJECTS.filter(project => project.category === selectedCategory);
 
+  // 📄 CV Download Handler
+  const handleDownloadCV = () => {
+    // This will download the PDF from the public folder
+    const link = document.createElement('a');
+    link.href = '/Navkaran_Singh_Resume.pdf'; // 👈 Make sure this matches your PDF filename in client/public/
+    link.download = 'Navkaran_Singh_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-16 pb-16">
-      <section id="home" className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16">
+      {/* Hero Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="home" 
+        className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-4xl text-center space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
             Navkaran Singh<span className="text-primary">_</span>
@@ -66,14 +109,23 @@ export default function Home() {
               />
             </span>
           </p>
-          <Button size="lg" className="mt-6" data-testid="button-download-cv">
+          <Button size="lg" className="mt-6" onClick={handleDownloadCV} data-testid="button-download-cv">
             <Download className="w-4 h-4 mr-2" />
             DOWNLOAD CV
           </Button>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="about" className="container max-w-6xl px-6">
+      {/* About Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="about" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold mb-8">Hi<span className="text-primary">_</span></h2>
         <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
           <p>
@@ -86,9 +138,18 @@ export default function Home() {
             I thrive on collaboration, clear communication, and solving challenging problems. Whether it's building dashboards, prototyping AI solutions, or engineering data pipelines—I bring curiosity, clarity, and a results-driven approach to every project.
           </p>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="services" className="container max-w-6xl px-6">
+      {/* Services Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="services" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold mb-8">How I Create Impact<span className="text-primary">_</span></h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ServiceCard
@@ -128,9 +189,18 @@ export default function Home() {
             tools={["A/B Testing", "Statistics", "Google Analytics", "Mixpanel"]}
           />
         </div>
-      </section>
+      </motion.section>
 
-      <section id="skills" className="container max-w-6xl px-6">
+      {/* Skills Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="skills" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold mb-12">Skills<span className="text-primary">_</span></h2>
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
@@ -177,9 +247,18 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="portfolio" className="container max-w-6xl px-6">
+      {/* Portfolio Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="portfolio" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold mb-8">Portfolio<span className="text-primary">_</span></h2>
         <p className="text-muted-foreground mb-8 max-w-3xl">
           Explore my projects where I apply my technical skills to develop practical solutions. I aim to showcase my ability to implement innovative solutions and drive tangible results. These experiences empower me to tackle complex real-world challenges effectively.
@@ -215,9 +294,18 @@ export default function Home() {
             />
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section id="resume" className="container max-w-6xl px-6">
+      {/* Resume Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="resume" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold mb-12">Resume<span className="text-primary">_</span></h2>
         <div className="grid md:grid-cols-2 gap-12">
           <div>
@@ -289,16 +377,24 @@ export default function Home() {
             />
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="contact" className="container max-w-6xl px-6">
-        <h2 className="text-3xl font-bold mb-8">Get in Touch<span className="text-primary">_</span></h2>
+      {/* Contact Section - YOUR ORIGINAL CONTENT */}
+      <motion.section 
+        id="contact" 
+        className="container max-w-6xl px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
         <ContactForm
           email="navkarancad@gmail.com"
           phone="+1 (514) 804-1045"
           location="Montréal, Canada"
         />
-      </section>
+      </motion.section>
     </div>
   );
 }
