@@ -3,7 +3,6 @@ import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb } fro
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import ServiceCard from "@/components/ServiceCard";
 import SkillBar from "@/components/SkillBar";
 import TimelineItem from "@/components/TimelineItem";
@@ -14,10 +13,11 @@ import dataImg from '@assets/stock_images/modern_data_analytic_8270b338.jpg';
 import aiImg from '@assets/stock_images/artificial_intellige_2dcb513b.jpg';
 import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg';
 
-const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "FULL-STACK"] as const;
+// 🎯 Updated categories - FULL-STACK changed to COMPUTER VISION
+const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "COMPUTER VISION"] as const;
 type Category = typeof CATEGORIES[number];
 
-// 🚀 YOUR PRODUCTION-READY AI PROJECTS
+// 🚀 YOUR 5 PRODUCTION-READY AI PROJECTS
 const ALL_PROJECTS = [
   {
     title: "Multi-Agent Content Pipeline",
@@ -25,7 +25,7 @@ const ALL_PROJECTS = [
     image: aiImg,
     category: "GENERATIVE AI" as const,
     technologies: ["LangChain", "Next.js", "Supabase", "OpenAI"],
-    githubUrl: "https://github.com/data-nav/multi-agent-content-ops", // 👈 Update after creating repo
+    githubUrl: "https://github.com/data-nav/multi-agent-content-ops",
   },
   {
     title: "Drift-Aware Retraining Pipeline",
@@ -33,7 +33,7 @@ const ALL_PROJECTS = [
     image: dataImg,
     category: "MACHINE LEARNING" as const,
     technologies: ["Python", "Prometheus", "Grafana", "pgvector"],
-    githubUrl: "https://github.com/data-nav/drift-aware-retraining", // 👈 Update after creating repo
+    githubUrl: "https://github.com/data-nav/drift-aware-retraining",
   },
   {
     title: "AI Model Router with Budget Control",
@@ -41,7 +41,7 @@ const ALL_PROJECTS = [
     image: pipelineImg,
     category: "DATA ANALYTICS" as const,
     technologies: ["Node.js", "OpenAI", "Claude", "PostgreSQL"],
-    githubUrl: "https://github.com/data-nav/model-router-budget", // 👈 Update after creating repo
+    githubUrl: "https://github.com/data-nav/model-router-budget",
   },
   {
     title: "Guardrail & Red-Team Harness",
@@ -49,22 +49,32 @@ const ALL_PROJECTS = [
     image: aiImg,
     category: "GENERATIVE AI" as const,
     technologies: ["Python", "FastAPI", "Supabase", "Moderation API"],
-    githubUrl: "https://github.com/data-nav/guardrail-red-team", // 👈 Update after creating repo
+    githubUrl: "https://github.com/data-nav/guardrail-red-team",
   },
   {
     title: "Evaluation-as-a-Service Platform",
     description: "CI/CD-integrated eval platform with automated rubric scoring, experiment tracking, and deployment blocking for below-threshold model performance.",
     image: pipelineImg,
-    category: "FULL-STACK" as const,
+    category: "COMPUTER VISION" as const,
     technologies: ["Next.js", "Python", "Supabase", "CI/CD"],
-    githubUrl: "https://github.com/data-nav/eval-as-a-service", // 👈 Update after creating repo
+    githubUrl: "https://github.com/data-nav/eval-as-a-service",
   },
 ];
 
-// Simple fade-in animation
+// 🎨 Smoother animations
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
 };
 
 export default function Home() {
@@ -76,9 +86,8 @@ export default function Home() {
 
   // 📄 CV Download Handler
   const handleDownloadCV = () => {
-    // This will download the PDF from the public folder
     const link = document.createElement('a');
-    link.href = '/Navkaran_Singh_Resume.pdf'; // 👈 Make sure this matches your PDF filename in client/public/
+    link.href = '/Navkaran_Singh_Resume.pdf';
     link.download = 'Navkaran_Singh_Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -87,7 +96,7 @@ export default function Home() {
 
   return (
     <div className="space-y-16 pb-16">
-      {/* Hero Section - YOUR ORIGINAL CONTENT */}
+      {/* Hero Section */}
       <motion.section 
         id="home" 
         className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16"
@@ -115,13 +124,13 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* About Section - YOUR ORIGINAL CONTENT */}
+      {/* About Section */}
       <motion.section 
         id="about" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -139,18 +148,21 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Services Section - YOUR ORIGINAL CONTENT */}
+      {/* Services Section */}
       <motion.section 
         id="services" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-3xl font-bold mb-8">How I Create Impact<span className="text-primary">_</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+        >
           <ServiceCard
             icon={BarChart3}
             title="Data Analysis & Visualization"
@@ -187,16 +199,16 @@ export default function Home() {
             description="Running A/B tests, analyzing metrics, and translating results into actionable strategy."
             tools={["A/B Testing", "Statistics", "Google Analytics", "Mixpanel"]}
           />
-        </div>
+        </motion.div>
       </motion.section>
 
-      {/* Skills Section - YOUR ORIGINAL CONTENT */}
+      {/* Skills Section */}
       <motion.section 
         id="skills" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -248,13 +260,13 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Portfolio Section - YOUR ORIGINAL CONTENT */}
+      {/* Portfolio Section */}
       <motion.section 
         id="portfolio" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -279,7 +291,11 @@ export default function Home() {
           ))}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          key={selectedCategory}
+        >
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.title}
@@ -292,16 +308,16 @@ export default function Home() {
               liveUrl={project.liveUrl}
             />
           ))}
-        </div>
+        </motion.div>
       </motion.section>
 
-      {/* Resume Section - YOUR ORIGINAL CONTENT */}
+      {/* Resume Section */}
       <motion.section 
         id="resume" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
@@ -378,13 +394,13 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Contact Section - YOUR ORIGINAL CONTENT */}
+      {/* Contact Section */}
       <motion.section 
         id="contact" 
-        className="container max-w-6xl px-6"
+        className="container max-w-6xl px-6 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
