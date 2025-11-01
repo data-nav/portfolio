@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
+import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ServiceCard from "@/components/ServiceCard";
@@ -13,9 +13,11 @@ import dataImg from '@assets/stock_images/modern_data_analytic_8270b338.jpg';
 import aiImg from '@assets/stock_images/artificial_intellige_2dcb513b.jpg';
 import pipelineImg from '@assets/stock_images/data_pipeline_cloud__22f08324.jpg';
 
+// 🎯 Updated categories - FULL-STACK changed to COMPUTER VISION
 const CATEGORIES = ["ALL", "GENERATIVE AI", "MACHINE LEARNING", "DATA ANALYTICS", "COMPUTER VISION"] as const;
 type Category = typeof CATEGORIES[number];
 
+// 🚀 YOUR 5 PRODUCTION-READY AI PROJECTS
 const ALL_PROJECTS = [
   {
     title: "Multi-Agent Content Pipeline",
@@ -59,6 +61,7 @@ const ALL_PROJECTS = [
   },
 ];
 
+// 🎨 Smoother animations
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 }
@@ -74,26 +77,14 @@ const staggerContainer = {
   }
 };
 
-// Section heading component with blue underline (like Rohan's portfolio)
-const SectionHeading = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-3xl font-bold mb-8 inline-block">
-    {children}
-    <span className="block h-1 w-16 bg-primary mt-2"></span>
-  </h2>
-);
-
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("ALL");
-  const { scrollY } = useScroll();
-  
-  // Parallax effect - background moves slower than content
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const filteredProjects = selectedCategory === "ALL" 
     ? ALL_PROJECTS 
     : ALL_PROJECTS.filter(project => project.category === selectedCategory);
 
+  // 📄 CV Download Handler
   const handleDownloadCV = () => {
     const link = document.createElement('a');
     link.href = '/Navkaran_Singh_Resume.pdf';
@@ -104,70 +95,36 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-12 pb-16">
-      {/* Hero Section - Shorter with parallax and scroll indicator */}
+    <div className="space-y-16 pb-16">
+      {/* Hero Section */}
       <motion.section 
         id="home" 
-        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden px-6 py-12"
+        className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background px-6 py-16"
         initial="hidden"
         animate="visible"
         variants={fadeIn}
         transition={{ duration: 0.6 }}
       >
-        {/* Parallax background with gradient */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5"
-          style={{ y: heroY, opacity: heroOpacity }}
-        />
-        
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl text-center space-y-6">
-          <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+        <div className="max-w-4xl text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
             Navkaran Singh<span className="text-primary">_</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-xl md:text-2xl text-muted-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground">
             A passionate{" "}
             <span className="text-primary font-semibold">
               <TypingText
                 phrases={["Data Analyst", "Data Engineer", "Data Scientist", "ML Engineer"]}
               />
             </span>
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <Button size="lg" className="mt-6" onClick={handleDownloadCV} data-testid="button-download-cv">
-              <Download className="w-4 h-4 mr-2" />
-              DOWNLOAD CV
-            </Button>
-          </motion.div>
+          </p>
+          <Button size="lg" className="mt-6" onClick={handleDownloadCV} data-testid="button-download-cv">
+            <Download className="w-4 h-4 mr-2" />
+            DOWNLOAD CV
+          </Button>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <ChevronDown className="w-6 h-6 text-primary opacity-50" />
-        </motion.div>
       </motion.section>
 
-      {/* About Section with divider */}
+      {/* About Section */}
       <motion.section 
         id="about" 
         className="container max-w-6xl px-6 scroll-mt-20"
@@ -177,7 +134,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>Hello<span className="text-primary">_</span></SectionHeading>
+        <h2 className="text-3xl font-bold mb-8">Hello<span className="text-primary">_</span></h2>
         <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
           <p>
             I'm <strong className="text-foreground">Navkaran</strong>, a data professional with <strong className="text-foreground">4+ years of experience</strong> turning complex problems into actionable insights.
@@ -201,7 +158,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>How I Create Impact<span className="text-primary">_</span></SectionHeading>
+        <h2 className="text-3xl font-bold mb-8">How I Create Impact<span className="text-primary">_</span></h2>
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={staggerContainer}
@@ -255,7 +212,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>Skills<span className="text-primary">_</span></SectionHeading>
+        <h2 className="text-3xl font-bold mb-12">Skills<span className="text-primary">_</span></h2>
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
             <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-6">
@@ -313,7 +270,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>Portfolio<span className="text-primary">_</span></SectionHeading>
+        <h2 className="text-3xl font-bold mb-8">Portfolio<span className="text-primary">_</span></h2>
         <p className="text-muted-foreground mb-8 max-w-3xl">
           Explore my projects where I apply my technical skills to develop practical solutions. I aim to showcase my ability to implement innovative solutions and drive tangible results. These experiences empower me to tackle complex real-world challenges effectively.
         </p>
@@ -364,7 +321,7 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>Resume<span className="text-primary">_</span></SectionHeading>
+        <h2 className="text-3xl font-bold mb-12">Resume<span className="text-primary">_</span></h2>
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-8">
@@ -447,7 +404,6 @@ export default function Home() {
         variants={fadeIn}
         transition={{ duration: 0.5 }}
       >
-        <SectionHeading>Get in Touch<span className="text-primary">_</span></SectionHeading>
         <ContactForm
           email="navkarancad@gmail.com"
           phone="+1 (514) 804-1045"
