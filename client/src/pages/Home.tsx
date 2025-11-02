@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown, Award, Mail } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -154,7 +154,7 @@ const ScrollToContactButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   // FIX: Use useEffect instead of useState for scroll listener
-  useState(() => {
+  useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);
@@ -165,7 +165,7 @@ const ScrollToContactButton = () => {
 
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
-  });
+  }, []);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
@@ -454,18 +454,19 @@ export default function Home() {
             ))}
           </div>
           
-          {/* FIX: Always show grid, even if empty, and add key to force re-render */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[200px]"
-            variants={staggerContainer}
-            key={`${selectedCategory}-${filteredProjects.length}`}
-            initial="hidden"
-            animate="visible"
+          {/* Portfolio Grid - Always visible */}
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            key={selectedCategory}
           >
-            {filteredProjects.length > 0 ? (
-              filteredProjects.map((project) => (
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.title}
+                variants={fadeIn}
+                initial="hidden"
+                animate="visible"
+              >
                 <ProjectCard
-                  key={`${selectedCategory}-${project.title}`}
                   title={project.title}
                   description={project.description}
                   image={project.image}
@@ -474,15 +475,9 @@ export default function Home() {
                   githubUrl={project.githubUrl}
                   liveUrl={project.liveUrl}
                 />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <p className="text-muted-foreground text-lg">
-                  No projects found in this category.
-                </p>
-              </div>
-            )}
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.section>
 
