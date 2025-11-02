@@ -1,4 +1,4 @@
-import { Home, User, Code, FolderKanban, GraduationCap, Mail } from "lucide-react";
+import { Home, User, Code, FolderKanban, Award, FileText, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarFooter } from "@/components/ui/sidebar";
 import ProfileCard from "./ProfileCard";
@@ -14,7 +14,8 @@ const menuItems = [
   { title: "About", icon: User, url: "#about" },
   { title: "Skills", icon: Code, url: "#skills" },
   { title: "Portfolio", icon: FolderKanban, url: "#portfolio" },
-  { title: "Resume", icon: GraduationCap, url: "#resume" },
+  { title: "Background", icon: FileText, url: "#background" },
+  { title: "Achievements", icon: Award, url: "#achievements" },
   { title: "Contact", icon: Mail, url: "#contact" },
 ];
 
