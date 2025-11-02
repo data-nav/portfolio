@@ -395,21 +395,21 @@ export default function Home() {
       </motion.section>
 
       {/* Contact Section */}
-      <motion.section 
-        id="contact" 
-        className="container max-w-6xl px-6 scroll-mt-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeIn}
-        transition={{ duration: 0.5 }}
-      >
-        <ContactForm
-          email="navkarancad@gmail.com"
-          phone="+1 (514) 804-1045"
-          location="Montréal, Canada"
-        />
-      </motion.section>
+     <motion.section 
+  id="contact" 
+  className="container max-w-6xl px-6 scroll-mt-20"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: "-100px" }}
+  variants={fadeIn}
+  transition={{ duration: 0.5 }}
+>
+  <ContactForm
+    email="navkarancad@gmail.com"
+    phone="+1 (514) 804-1045"
+    location="Montréal, Canada"
+  />
+</motion.section>
     </div>
   );
 }
