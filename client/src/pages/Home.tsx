@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown } from "lucide-react";
+import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown, Award, Mail, ArrowUp } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import ServiceCard from "@/components/ServiceCard";
 import SkillBar from "@/components/SkillBar";
 import TimelineItem from "@/components/TimelineItem";
@@ -59,6 +67,32 @@ const ALL_PROJECTS = [
   },
 ];
 
+// Sample certificates - replace with your actual certificate images
+const CERTIFICATES = [
+  {
+    title: "Datacamp - Data Analyst",
+    organization: "Datacamp",
+    date: "July 2024",
+    image: "/certificates/datacamp.png", // Replace with your actual path
+    skills: ["Python", "SQL", "Statistics"]
+  },
+  {
+    title: "Salesforce AI Associate",
+    organization: "Salesforce/Trailhead",
+    date: "January 2025",
+    image: "/certificates/salesforce.png", // Replace with your actual path
+    skills: ["AI", "CRM", "Salesforce"]
+  },
+  {
+    title: "AWS Cloud Practitioner",
+    organization: "Amazon Web Services",
+    date: "March 2024",
+    image: "/certificates/aws.png", // Replace with your actual path
+    skills: ["AWS", "Cloud", "Architecture"]
+  },
+  // Add more certificates as needed
+];
+
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 }
@@ -82,6 +116,77 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   </h2>
 );
 
+// Certificate Card Component
+const CertificateCard = ({ title, organization, date, image, skills }: { 
+  title: string; 
+  organization: string; 
+  date: string; 
+  image: string;
+  skills: string[];
+}) => (
+  <Card className="h-full hover-elevate">
+    <CardContent className="p-6">
+      <div className="aspect-[4/3] bg-muted rounded-lg mb-4 overflow-hidden">
+        <img 
+          src={image} 
+          alt={title}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback if image doesn't exist
+            e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18"%3ECertificate%3C/text%3E%3C/svg%3E';
+          }}
+        />
+      </div>
+      <h3 className="font-bold text-lg mb-2">{title}</h3>
+      <p className="text-sm text-muted-foreground mb-3">{organization}</p>
+      <p className="text-xs text-muted-foreground mb-3">{date}</p>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <Badge key={skill} variant="secondary" className="text-xs">
+            {skill}
+          </Badge>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+// Scroll to Contact Button
+const ScrollToContactButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useState(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  });
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <motion.button
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0 }}
+      onClick={scrollToContact}
+      className="fixed bottom-8 right-8 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all hover:scale-110"
+      aria-label="Scroll to contact"
+      title="Contact Me"
+    >
+      <Mail className="w-6 h-6" />
+    </motion.button>
+  );
+};
+
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("ALL");
   const { scrollY } = useScroll();
@@ -104,6 +209,8 @@ export default function Home() {
 
   return (
     <div className="pb-0">
+      <ScrollToContactButton />
+
       {/* Hero Section - Pure white background */}
       <motion.section 
         id="home" 
@@ -174,7 +281,7 @@ export default function Home() {
         transition={{ duration: 0.5 }}
       >
         <div className="container max-w-6xl px-6">
-          <SectionHeading>Hello<span className="text-primary">_</span></SectionHeading>
+          <SectionHeading>About Me<span className="text-primary">_</span></SectionHeading>
           <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
             <p>
               I'm <strong className="text-foreground">Navkaran</strong>, a data professional with <strong className="text-foreground">4+ years of experience</strong> turning complex problems into actionable insights.
@@ -358,9 +465,9 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Resume Section - Light gray/blue background */}
+      {/* Background Section (formerly Resume) - Light gray/blue background */}
       <motion.section 
-        id="resume" 
+        id="background" 
         className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
@@ -369,11 +476,11 @@ export default function Home() {
         transition={{ duration: 0.5 }}
       >
         <div className="container max-w-6xl px-6">
-          <SectionHeading>Resume<span className="text-primary">_</span></SectionHeading>
+          <SectionHeading>Background<span className="text-primary">_</span></SectionHeading>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-8">
-                Education
+              <h3 className="text-lg font-bold tracking-wide text-foreground uppercase mb-8 flex items-center gap-2">
+                <span className="text-primary">📚</span> Education
               </h3>
               <TimelineItem
                 type="education"
@@ -396,8 +503,8 @@ export default function Home() {
             </div>
             
             <div>
-              <h3 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase mb-8">
-                Employment
+              <h3 className="text-lg font-bold tracking-wide text-foreground uppercase mb-8 flex items-center gap-2">
+                <span className="text-primary">💼</span> Employment
               </h3>
               <TimelineItem
                 type="experience"
@@ -439,6 +546,46 @@ export default function Home() {
                 skills={["Python", "A/B Testing", "Transformers"]}
               />
             </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Achievements Section - White background */}
+      <motion.section 
+        id="achievements" 
+        className="bg-white dark:bg-background py-16 scroll-mt-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={fadeIn}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="container max-w-6xl px-6">
+          <SectionHeading>Achievements<span className="text-primary">_</span></SectionHeading>
+          <p className="text-muted-foreground mb-8 max-w-3xl">
+            Demonstrating my commitment to continuous learning, I have attained notable certifications and accomplishments that highlight my dedication to excellence in the field of data. I actively pursue opportunities to enhance my knowledge, ensuring I stay at the forefront of data-driven innovations.
+          </p>
+          
+          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {CERTIFICATES.map((cert, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <CertificateCard {...cert} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+
+          {/* Dots indicator for mobile */}
+          <div className="flex justify-center gap-2 mt-6 md:hidden">
+            {CERTIFICATES.map((_, index) => (
+              <div 
+                key={index} 
+                className="w-2 h-2 rounded-full bg-muted hover:bg-primary transition-colors"
+              />
+            ))}
           </div>
         </div>
       </motion.section>
