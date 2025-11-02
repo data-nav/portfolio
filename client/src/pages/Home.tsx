@@ -104,10 +104,10 @@ export default function Home() {
 
   return (
     <div className="pb-0">
-      {/* Hero Section - White background */}
+      {/* Hero Section - Pure white background */}
       <motion.section 
         id="home" 
-        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden px-6 py-12 bg-background"
+        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden px-6 py-12 bg-white dark:bg-background"
         initial="hidden"
         animate="visible"
         variants={fadeIn}
@@ -163,10 +163,10 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* About Section - Light gray background */}
+      {/* About Section - Light blue/gray background */}
       <motion.section 
         id="about" 
-        className="bg-muted/30 py-16 scroll-mt-20"
+        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -192,7 +192,7 @@ export default function Home() {
       {/* Services Section - White background */}
       <motion.section 
         id="services" 
-        className="bg-background py-16 scroll-mt-20"
+        className="bg-white dark:bg-background py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -245,10 +245,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Skills Section - Light gray background */}
+      {/* Skills Section - Light blue/gray background */}
       <motion.section 
         id="skills" 
-        className="bg-muted/30 py-16 scroll-mt-20"
+        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -308,7 +308,7 @@ export default function Home() {
       {/* Portfolio Section - White background */}
       <motion.section 
         id="portfolio" 
-        className="bg-background py-16 scroll-mt-20"
+        className="bg-white dark:bg-background py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -358,10 +358,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Resume Section - Light gray background */}
+      {/* Resume Section - Light blue/gray background */}
       <motion.section 
         id="resume" 
-        className="bg-muted/30 py-16 scroll-mt-20"
+        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -443,10 +443,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Contact Section - Light blue/gray background */}
+      {/* Contact Section - Light blue accent background */}
       <motion.section 
         id="contact" 
-        className="bg-primary/5 py-16 scroll-mt-20"
+        className="bg-blue-50/50 dark:bg-primary/5 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
