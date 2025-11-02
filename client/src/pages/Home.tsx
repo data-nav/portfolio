@@ -163,10 +163,10 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* About Section - Light blue/gray background */}
+      {/* About Section - Light gray/blue background */}
       <motion.section 
         id="about" 
-        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
+        className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -245,10 +245,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Skills Section - Light blue/gray background */}
+      {/* Skills Section - Light gray/blue background */}
       <motion.section 
         id="skills" 
-        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
+        className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -358,10 +358,10 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Resume Section - Light blue/gray background */}
+      {/* Resume Section - Light gray/blue background */}
       <motion.section 
         id="resume" 
-        className="bg-slate-50 dark:bg-muted/30 py-16 scroll-mt-20"
+        className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -446,7 +446,7 @@ export default function Home() {
       {/* Contact Section - Light blue accent background */}
       <motion.section 
         id="contact" 
-        className="bg-blue-50/50 dark:bg-primary/5 py-16 scroll-mt-20"
+        className="bg-blue-50/70 dark:bg-primary/5 py-16 scroll-mt-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
