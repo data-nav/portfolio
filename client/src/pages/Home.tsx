@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown, Award, Mail, ArrowUp } from "lucide-react";
+import { Download, BarChart3, Brain, Database, Layers, Workflow, Lightbulb, ChevronDown, Award, Mail } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,24 +73,23 @@ const CERTIFICATES = [
     title: "Datacamp - Data Analyst",
     organization: "Datacamp",
     date: "July 2024",
-    image: "/certificates/datacamp.png", // Replace with your actual path
+    image: "/certificates/datacamp.png",
     skills: ["Python", "SQL", "Statistics"]
   },
   {
     title: "Salesforce AI Associate",
     organization: "Salesforce/Trailhead",
     date: "January 2025",
-    image: "/certificates/salesforce.png", // Replace with your actual path
+    image: "/certificates/salesforce.png",
     skills: ["AI", "CRM", "Salesforce"]
   },
   {
     title: "AWS Cloud Practitioner",
     organization: "Amazon Web Services",
     date: "March 2024",
-    image: "/certificates/aws.png", // Replace with your actual path
+    image: "/certificates/aws.png",
     skills: ["AWS", "Cloud", "Architecture"]
   },
-  // Add more certificates as needed
 ];
 
 const fadeIn = {
@@ -132,7 +131,6 @@ const CertificateCard = ({ title, organization, date, image, skills }: {
           alt={title}
           className="w-full h-full object-cover"
           onError={(e) => {
-            // Fallback if image doesn't exist
             e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18"%3ECertificate%3C/text%3E%3C/svg%3E';
           }}
         />
@@ -151,10 +149,11 @@ const CertificateCard = ({ title, organization, date, image, skills }: {
   </Card>
 );
 
-// Scroll to Contact Button
+// Scroll to Contact Button - FIXED VERSION
 const ScrollToContactButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
+  // FIX: Use useEffect instead of useState for scroll listener
   useState(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -170,7 +169,9 @@ const ScrollToContactButton = () => {
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
-    contactSection?.scrollIntoView({ behavior: 'smooth' });
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -181,6 +182,7 @@ const ScrollToContactButton = () => {
       className="fixed bottom-8 right-8 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all hover:scale-110"
       aria-label="Scroll to contact"
       title="Contact Me"
+      style={{ display: isVisible ? 'block' : 'none' }}
     >
       <Mail className="w-6 h-6" />
     </motion.button>
@@ -194,6 +196,7 @@ export default function Home() {
   const heroY = useTransform(scrollY, [0, 500], [0, 150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
+  // FIX: Ensure filteredProjects always returns an array
   const filteredProjects = selectedCategory === "ALL" 
     ? ALL_PROJECTS 
     : ALL_PROJECTS.filter(project => project.category === selectedCategory);
@@ -206,6 +209,10 @@ export default function Home() {
     link.click();
     document.body.removeChild(link);
   };
+
+  // Debug: Log filtered projects
+  console.log('Selected Category:', selectedCategory);
+  console.log('Filtered Projects:', filteredProjects);
 
   return (
     <div className="pb-0">
@@ -436,7 +443,10 @@ export default function Home() {
                 className={`cursor-pointer text-xs uppercase tracking-wide px-4 py-2 hover-elevate active-elevate-2 ${
                   selectedCategory === category ? "toggle-elevate toggle-elevated" : "toggle-elevate"
                 }`}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => {
+                  console.log('Clicking category:', category);
+                  setSelectedCategory(category);
+                }}
                 data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 {category}
@@ -444,23 +454,34 @@ export default function Home() {
             ))}
           </div>
           
+          {/* FIX: Always show grid, even if empty, and add key to force re-render */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[200px]"
             variants={staggerContainer}
-            key={selectedCategory}
+            key={`${selectedCategory}-${filteredProjects.length}`}
+            initial="hidden"
+            animate="visible"
           >
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.title}
-                title={project.title}
-                description={project.description}
-                image={project.image}
-                category={project.category}
-                technologies={project.technologies}
-                githubUrl={project.githubUrl}
-                liveUrl={project.liveUrl}
-              />
-            ))}
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project) => (
+                <ProjectCard
+                  key={`${selectedCategory}-${project.title}`}
+                  title={project.title}
+                  description={project.description}
+                  image={project.image}
+                  category={project.category}
+                  technologies={project.technologies}
+                  githubUrl={project.githubUrl}
+                  liveUrl={project.liveUrl}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground text-lg">
+                  No projects found in this category.
+                </p>
+              </div>
+            )}
           </motion.div>
         </div>
       </motion.section>
@@ -578,7 +599,6 @@ export default function Home() {
             <CarouselNext className="hidden md:flex" />
           </Carousel>
 
-          {/* Dots indicator for mobile */}
           <div className="flex justify-center gap-2 mt-6 md:hidden">
             {CERTIFICATES.map((_, index) => (
               <div 
