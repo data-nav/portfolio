@@ -1,8 +1,8 @@
 import { ExternalLink, Github } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface ProjectCardProps {
   title: string;
@@ -12,6 +12,7 @@ interface ProjectCardProps {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  featured?: boolean;
 }
 
 export default function ProjectCard({
@@ -22,81 +23,115 @@ export default function ProjectCard({
   technologies,
   githubUrl,
   liveUrl,
+  featured = false,
 }: ProjectCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-      className="h-full"
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 }
+      }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
     >
-      <Card className="h-full flex flex-col overflow-hidden group cursor-pointer transition-shadow duration-300 hover:shadow-xl">
-        <div className="relative overflow-hidden aspect-video">
-          <motion.img
+      <Card className="h-full flex flex-col overflow-hidden group border-2 hover:border-primary/50 hover:shadow-2xl transition-all duration-300">
+        {/* Image Section with Overlay */}
+        <div className="relative h-48 overflow-hidden bg-muted">
+          <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.4 }}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
-          {/* Quick action buttons on hover */}
-          <motion.div 
-            className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            initial={{ y: 10 }}
-            whileHover={{ y: 0 }}
-          >
+          {/* Overlay with Quick Actions - appears on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4 gap-2">
             {githubUrl && (
               <Button
-                size="icon"
+                size="sm"
                 variant="secondary"
                 asChild
-                className="shadow-lg"
-                data-testid="button-project-github"
+                className="backdrop-blur-sm bg-white/90 hover:bg-white"
               >
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                  <Github className="w-4 h-4" />
+                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                  <Github className="w-4 h-4 mr-2" />
+                  Code
                 </a>
               </Button>
             )}
             {liveUrl && (
               <Button
-                size="icon"
-                variant="secondary"
+                size="sm"
+                variant="default"
                 asChild
-                className="shadow-lg"
-                data-testid="button-project-live"
+                className="backdrop-blur-sm"
               >
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                  <ExternalLink className="w-4 h-4" />
+                <a href={liveUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Demo
                 </a>
               </Button>
             )}
-          </motion.div>
-        </div>
-        
-        <CardHeader className="flex-grow">
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <CardTitle className="text-xl">{title}</CardTitle>
-            <Badge variant="secondary" className="text-xs shrink-0">
+          </div>
+
+          {/* Category Badge - Top Right */}
+          <div className="absolute top-3 right-3">
+            <Badge 
+              variant="default" 
+              className="text-xs font-semibold shadow-lg backdrop-blur-sm bg-primary/90"
+            >
               {category}
             </Badge>
           </div>
-          <CardDescription className="line-clamp-3">{description}</CardDescription>
-        </CardHeader>
-        
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {technologies.map((tech) => (
-              <Badge
-                key={tech}
-                variant="outline"
-                className="text-xs font-normal transition-colors duration-200 hover:bg-primary/10"
+
+          {/* Featured Badge - Top Left */}
+          {featured && (
+            <div className="absolute top-3 left-3">
+              <Badge 
+                variant="secondary" 
+                className="text-xs font-semibold shadow-lg backdrop-blur-sm bg-yellow-400 text-black"
               >
-                {tech}
+                ⭐ Featured
               </Badge>
-            ))}
-          </div>
+            </div>
+          )}
+        </div>
+
+        {/* Content Section */}
+        <CardHeader className="pb-3">
+          <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors duration-200">
+            {title}
+          </h3>
+        </CardHeader>
+
+        <CardContent className="flex-grow pb-4">
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+            {description}
+          </p>
         </CardContent>
+
+        {/* Technologies Footer */}
+        <CardFooter className="pt-0 pb-4 flex-wrap gap-2">
+          {technologies.slice(0, 4).map((tech) => (
+            <Badge
+              key={tech}
+              variant="outline"
+              className="text-xs font-medium bg-muted/50 hover:bg-muted transition-colors"
+            >
+              {tech}
+            </Badge>
+          ))}
+          {technologies.length > 4 && (
+            <Badge
+              variant="outline"
+              className="text-xs font-medium bg-muted/50"
+            >
+              +{technologies.length - 4}
+            </Badge>
+          )}
+        </CardFooter>
+
+        {/* Bottom accent line */}
+        <div className="h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 group-hover:via-primary/100 transition-all duration-300" />
       </Card>
     </motion.div>
   );
