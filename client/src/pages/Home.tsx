@@ -294,7 +294,7 @@ export default function Home() {
               I'm <strong className="text-foreground">Navkaran</strong>, a data professional with <strong className="text-foreground">4+ years of experience</strong> turning complex problems into actionable insights.
             </p>
             <p>
-              With a Master's in Artificial Intelligence from Concordia University and a Bachelor's in Computer Science Engineering, I specialize in data analysis, machine learning, and building automated workflows that drive real business value.
+              With a Master's in Artificial Intelligence and a Bachelor's in Computer Science Engineering, I specialize in data analysis, machine learning, and building automated workflows that drive real business value.
             </p>
             <p>
               I thrive on collaboration, clear communication, and solving challenging problems. Whether it's building dashboards, prototyping AI solutions, or engineering data pipelines—I bring curiosity, clarity, and a results-driven approach to every project.
