@@ -525,7 +525,7 @@ export default function Home() {
               <TimelineItem
                 type="experience"
                 organization="WINDO"
-                role="AI Intern"
+                role="Data Engineer Co-Op"
                 period="Jan 2025 - July 2025"
                 location="Montréal, QC"
                 achievements={[
