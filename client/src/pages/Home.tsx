@@ -529,38 +529,52 @@ export default function Home() {
                 period="Jan 2025 - July 2025"
                 location="Montréal, QC"
                 achievements={[
-                  "Drove 25% higher relevance with RAG pipeline",
-                  "Optimized workflows with CI testing, cutting outputs 20%",
-                  "Streamlined cross-team AI deployment pipelines"
+                  " Built IoT data pipeline for industrial drone fleet (ESP32/C++) processing real-time sensor data with ±3% accuracy",
+                  "Automated Xero-to-warehouse ETL pipeline via OAuth2, eliminating manual invoice entry and enabling real-time BI reporting",
+                  " Developed real-time pricing system aggregating 200+ SKUs with sub-second query performance for customer quotes"
                 ]}
-                skills={["RAG", "LLMs", "CI/CD"]}
+                skills={["Python", "TypeScript", "PowerBI", "ETL" , "SQL"]}
               />
               <TimelineItem
                 type="experience"
-                organization="REALITY LABS"
-                role="Generative AI Intern"
+                organization="OMACLE"
+                role="AI/Data  Intern"
                 period="April 2024 - Aug 2024"
-                location="New York, NY"
+                location="Ottawa, Ontario"
                 achievements={[
-                  "Drove 25% higher relevance with RAG pipeline",
-                  "Optimized workflows with CI testing, cutting outputs 20%",
-                  "Streamlined cross-team AI deployment pipelines"
+                 "Built AI knowledge system (LangChain + vector DBs) across 50K+ documents—reduced research time by 75%" , 
+ "Created analytics platform processing 500K+ interactions, cutting executive reporting from 2 hours to 15 minutes" ,
+ "Optimized AI costs by 47% while improving satisfaction 68%→91% through model performance analysis"
                 ]}
-                skills={["RAG", "LLMs", "CI/CD"]}
+                skills={["Python", "Streamlit" , "LangChain" , "VectorDB" , "Statistcal Analysis" ]}
               />
               <TimelineItem
                 type="experience"
                 organization="L'ORIGINAL.ORG"
-                role="Analyst Intern"
+                role="Data Analyst"
                 period="Jan 2023 - July 2023"
                 location="Montréal, QC"
                 achievements={[
-                  "Reduced query latency 40ms with distributed caching",
-                  "Boosted engagement via hybrid recommender system",
-                  "Automated tagging with transformer pipelines"
+                 "Analyzed swipe patterns and session behavior for art discovery platform—insights improved recommendation algorithms" , 
+"Built SQL/Python/Tableau dashboards tracking performance metrics and visitor trends" , 
+"Optimized ETL pipeline reducing processing time by 30% through SQL query improvements and incremental loading"
                 ]}
-                skills={["Python", "A/B Testing", "Transformers"]}
+                skills={["SQL" , "Python" , "Tableau" , "ETL"]}
               />
+              <TimelineItem
+                type="experience"
+                organization="Smart Energy Water"
+                role="Business Analyst"
+                period="July 2021 - Aug 2022"
+                location="Ottawa, Ontario"
+                achievements={[
+                "Designed Tableau/Power BI dashboards consolidating utility monitoring reports into unified analytics interface" , 
+"Conducted competitive analysis using Python/Excel—informed product strategy and feature prioritization" , 
+" Performed API testing with Python/Postman ensuring meter reading and consumption data accuracy" 
+                ]}
+                skills={["Tableau" , "Power BI" , "Python" ,"Postman" , "Jira" ,"Figma"  ]}
+              />
+
             </div>
           </div>
         </div>
