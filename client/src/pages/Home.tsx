@@ -563,7 +563,7 @@ export default function Home() {
               />
               <TimelineItem
                 type="experience"
-                organization="Smart Energy Water"
+                organization="SMART ENERGY WATER"
                 role="Business Analyst"
                 period="July 2021 - Aug 2022"
                 location="Ottawa, Ontario"
