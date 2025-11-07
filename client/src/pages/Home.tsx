@@ -67,7 +67,6 @@ const ALL_PROJECTS = [
   },
 ];
 
-// Sample certificates - replace with your actual certificate images
 const CERTIFICATES = [
   {
     title: "Datacamp - Data Analyst",
@@ -107,7 +106,6 @@ const staggerContainer = {
   }
 };
 
-// Section heading with blue underline
 const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-3xl font-bold mb-8 inline-block">
     {children}
@@ -115,7 +113,6 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
   </h2>
 );
 
-// Certificate Card Component
 const CertificateCard = ({ title, organization, date, image, skills }: { 
   title: string; 
   organization: string; 
@@ -149,11 +146,9 @@ const CertificateCard = ({ title, organization, date, image, skills }: {
   </Card>
 );
 
-// Scroll to Contact Button - FIXED VERSION
 const ScrollToContactButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // FIX: Use useEffect instead of useState for scroll listener
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -196,7 +191,6 @@ export default function Home() {
   const heroY = useTransform(scrollY, [0, 500], [0, 150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-  // FIX: Ensure filteredProjects always returns an array
   const filteredProjects = selectedCategory === "ALL" 
     ? ALL_PROJECTS 
     : ALL_PROJECTS.filter(project => project.category === selectedCategory);
@@ -210,15 +204,11 @@ export default function Home() {
     document.body.removeChild(link);
   };
 
-  // Debug: Log filtered projects
-  console.log('Selected Category:', selectedCategory);
-  console.log('Filtered Projects:', filteredProjects);
-
   return (
     <div className="pb-0">
       <ScrollToContactButton />
 
-      {/* Hero Section - Pure white background */}
+      {/* Hero Section */}
       <motion.section 
         id="home" 
         className="relative min-h-[50vh] flex items-center justify-center overflow-hidden px-6 py-12 bg-white dark:bg-background"
@@ -277,7 +267,7 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* About Section - Light gray/blue background */}
+      {/* About Section */}
       <motion.section 
         id="about" 
         className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
@@ -303,7 +293,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Services Section - White background */}
+      {/* Services Section */}
       <motion.section 
         id="services" 
         className="bg-white dark:bg-background py-16 scroll-mt-20"
@@ -359,7 +349,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Skills Section - Light gray/blue background */}
+      {/* Skills Section */}
       <motion.section 
         id="skills" 
         className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
@@ -419,7 +409,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Portfolio Section - White background */}
+      {/* Portfolio Section */}
       <motion.section 
         id="portfolio" 
         className="bg-white dark:bg-background py-16 scroll-mt-20"
@@ -443,10 +433,7 @@ export default function Home() {
                 className={`cursor-pointer text-xs uppercase tracking-wide px-4 py-2 hover-elevate active-elevate-2 ${
                   selectedCategory === category ? "toggle-elevate toggle-elevated" : "toggle-elevate"
                 }`}
-                onClick={() => {
-                  console.log('Clicking category:', category);
-                  setSelectedCategory(category);
-                }}
+                onClick={() => setSelectedCategory(category)}
                 data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 {category}
@@ -454,7 +441,6 @@ export default function Home() {
             ))}
           </div>
           
-          {/* Portfolio Grid - Always visible */}
           <div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             key={selectedCategory}
@@ -481,7 +467,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Background Section (formerly Resume) - Light gray/blue background */}
+      {/* Background Section */}
       <motion.section 
         id="background" 
         className="bg-gray-50 dark:bg-muted/30 py-16 scroll-mt-20"
@@ -501,20 +487,20 @@ export default function Home() {
               <TimelineItem
                 type="education"
                 organization="CONCORDIA UNIVERSITY"
-                role="Master's in Artificial Intelligence"
-                period="2023 - 2025"
+                role="Master's in Computer Science"
+                period="Jan 2024 - Jul 2025"
                 location="Montreal, QC"
                 gpa="3.85"
-                courses={["Machine Learning", "Deep Learning", "NLP", "Computer Vision"]}
+                courses={["Advanced Data Management", "Data Analytics & Machine Learning", "Statistical Foundation for Data Science", "Data Warehousing", "Cloud Computing"]}
               />
               <TimelineItem
                 type="education"
                 organization="PUNJAB ENGINEERING COLLEGE"
-                role="B.Tech in Computer Science & Engineering"
-                period="2017 - 2021"
+                role="B.Tech in Electrical, Electronics & Communications Engineering"
+                period="Jun 2017 - Jun 2021"
                 location="Chandigarh, India"
                 gpa="3.72"
-                courses={["Data Structures", "Algorithms", "Databases", "OS"]}
+                courses={["Database Management Systems", "Big Data Analytics", "Object Oriented Programming", "Data Structures & Algorithms", "Artificial Intelligence"]}
               />
             </div>
             
@@ -522,65 +508,101 @@ export default function Home() {
               <h3 className="text-lg font-bold tracking-wide text-foreground uppercase mb-8 flex items-center gap-2">
                 <span className="text-primary">💼</span> Employment
               </h3>
+              
               <TimelineItem
                 type="experience"
                 organization="WINDO"
                 role="Data Engineer Co-Op"
-                period="Jan 2025 - July 2025"
-                location="Montréal, QC"
+                period="Jan 2025 - Jul 2025"
+                location="Montreal, QC"
                 achievements={[
-                  " Built IoT data pipeline for industrial drone fleet (ESP32/C++) processing real-time sensor data with ±3% accuracy",
-                  "Automated Xero-to-warehouse ETL pipeline via OAuth2, eliminating manual invoice entry and enabling real-time BI reporting",
-                  " Developed real-time pricing system aggregating 200+ SKUs with sub-second query performance for customer quotes"
+                  "Engineered IoT data collection system (ESP32/C++) capturing real-time liquid-level sensor readings from industrial drones, implementing signal processing algorithms to ensure data quality and measurement accuracy for downstream analytics",
+                  "Built automated ETL pipeline (TypeScript/Node.js) integrating Xero accounting API with internal data warehouse via OAuth2, eliminating manual invoice data entry and ensuring real-time financial data availability for business intelligence reporting",
+                  "Performed quantitative analysis of 8 hardware sensor options using Excel and Python, evaluating cost-benefit trade-offs and accuracy specifications (±3%), delivered data-driven recommendation that optimized hardware procurement decisions",
+                  "Developed real-time data pipeline connecting Xero inventory database to customer-facing quote system, aggregating pricing data across 200+ SKUs and enabling sub-second query performance"
                 ]}
-                skills={["Python", "TypeScript", "PowerBI", "ETL" , "SQL"]}
+                skills={["Python", "SQL", "TypeScript", "Node.js", "ETL", "Data Pipelines", "Excel", "IoT Data"]}
               />
+              
               <TimelineItem
                 type="experience"
                 organization="OMACLE"
-                role="AI/Data  Intern"
-                period="April 2024 - Aug 2024"
-                location="Ottawa, Ontario"
+                role="AI/Data Intern"
+                period="Apr 2024 - Jul 2024"
+                location="Ottawa, ON"
                 achievements={[
-                 "Built AI knowledge system (LangChain + vector DBs) across 50K+ documents—reduced research time by 75%" , 
- "Created analytics platform processing 500K+ interactions, cutting executive reporting from 2 hours to 15 minutes" ,
- "Optimized AI costs by 47% while improving satisfaction 68%→91% through model performance analysis"
+                  "Built RAG (Retrieval-Augmented Generation) application using LangChain and ChromaDB vector database for internal knowledge management, enabling semantic search across technical documentation and improving information retrieval speed",
+                  "Developed interactive dashboard using Streamlit consolidating data from multiple internal systems, providing unified interface for tracking customer interactions and product usage metrics",
+                  "Optimized vector database queries in ChromaDB by implementing custom embedding strategies, improving search performance and enabling more responsive semantic search",
+                  "Evaluated multiple LLM providers (GPT-4, Claude, Gemini) for different use cases, analyzing cost vs. performance trade-offs and implementing routing logic to optimize API spending"
                 ]}
-                skills={["Python", "Streamlit" , "LangChain" , "VectorDB" , "Statistcal Analysis" ]}
+                skills={["Python", "LangChain", "ChromaDB", "Streamlit", "Vector DBs", "NLP", "API Integration"]}
               />
+              
               <TimelineItem
                 type="experience"
-                organization="L'ORIGINAL.ORG"
+                organization="L'ORIGINAL"
                 role="Data Analyst"
-                period="Jan 2023 - July 2023"
-                location="Montréal, QC"
+                period="Jan 2024 - May 2024"
+                location="Montreal, QC"
                 achievements={[
-                 "Analyzed swipe patterns and session behavior for art discovery platform—insights improved recommendation algorithms" , 
-"Built SQL/Python/Tableau dashboards tracking performance metrics and visitor trends" , 
-"Optimized ETL pipeline reducing processing time by 30% through SQL query improvements and incremental loading"
+                  "Analyzed user engagement data from Tinder-style art discovery interface for Quebec-based art gallery platform, examining swipe patterns, session behavior, and conversion funnels to deliver insights that informed recommendation algorithm improvements",
+                  "Built analytics dashboards using SQL, Python, and Tableau processing user interaction data to track website performance metrics, visitor trends, and artist engagement rates",
+                  "Optimized ETL data pipeline reducing processing time by 30% through SQL query improvements and incremental data loading, enabling more frequent dashboard updates",
+                  "Performed exploratory data analysis on visitor demographics and artwork performance, creating visualizations and statistical summaries that supported marketing decisions"
                 ]}
-                skills={["SQL" , "Python" , "Tableau" , "ETL"]}
+                skills={["SQL", "Python", "Tableau", "ETL", "Data Visualization", "Statistical Analysis"]}
               />
+              
               <TimelineItem
                 type="experience"
                 organization="SMART ENERGY WATER"
                 role="Business Analyst"
-                period="July 2021 - Aug 2022"
-                location="Ottawa, Ontario"
+                period="Jun 2021 - Aug 2022"
+                location="Noida, India"
                 achievements={[
-                "Designed Tableau/Power BI dashboards consolidating utility monitoring reports into unified analytics interface" , 
-"Conducted competitive analysis using Python/Excel—informed product strategy and feature prioritization" , 
-" Performed API testing with Python/Postman ensuring meter reading and consumption data accuracy" 
+                  "Designed and implemented dashboards in Tableau and Power BI for operations and customer success teams, consolidating multiple utility monitoring reports into unified analytics interface",
+                  "Conducted market research analyzing competitor digital customer experience (CX) platforms in the energy/utilities sector using Python and Excel, delivering competitive analysis reports that informed product strategy",
+                  "Performed API testing and data validation using Python and Postman across internal energy monitoring systems, identifying data quality issues and ensuring accuracy of customer meter readings",
+                  "Created dashboard wireframes in Figma based on stakeholder feedback, iterating on designs before implementation in Tableau and Power BI"
                 ]}
-                skills={["Tableau" , "Power BI" , "Python" ,"Postman" , "Jira" ,"Figma"  ]}
+                skills={["Tableau", "Power BI", "Python", "Excel", "Jira", "Figma", "Postman", "API Testing"]}
               />
-
+              
+              <TimelineItem
+                type="experience"
+                organization="WONDER AUTOMATION TRAINING DIVISION"
+                role="Data Engineer Intern"
+                period="Jan 2020 - Jun 2020"
+                location="India"
+                achievements={[
+                  "Developed Python script for real-time data monitoring and collection from industrial automation systems, reducing manual data collection time by 40% and enabling automated reporting",
+                  "Configured SCADA (Supervisory Control and Data Acquisition) system for simulated industrial process, implementing data logging and visualization features that improved process visibility",
+                  "Engineered automation solutions using PLC (Programmable Logic Controller) programming, implementing control logic that increased process reliability and enabled automated data capture"
+                ]}
+                skills={["Python", "Statistical Data Analysis", "Real-time Data Processing", "SCADA", "Industrial Automation"]}
+              />
+              
+              <TimelineItem
+                type="experience"
+                organization="ALQIMI"
+                role="Data Engineer Intern"
+                period="Jan 2019 - Jul 2019"
+                location="India"
+                achievements={[
+                  "Built predictive models using Python (scikit-learn) for customer churn prediction and behavior analysis, applying machine learning techniques including logistic regression and random forests",
+                  "Designed and maintained MongoDB database schema for storing customer interaction data, implementing queries for data retrieval and supporting analytics workflows",
+                  "Performed statistical analysis on customer datasets using Python (Pandas, NumPy) to identify trends and correlations in user behavior, creating visualizations and summary reports",
+                  "Applied NLP techniques using Python libraries to analyze customer feedback and review text, extracting sentiment scores and common themes"
+                ]}
+                skills={["Python", "MongoDB", "Statistical Analysis", "Machine Learning", "scikit-learn", "NLP", "Pandas"]}
+              />
             </div>
           </div>
         </div>
       </motion.section>
 
-      {/* Achievements Section - White background */}
+      {/* Achievements Section */}
       <motion.section 
         id="achievements" 
         className="bg-white dark:bg-background py-16 scroll-mt-20"
@@ -619,7 +641,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Contact Section - Light blue accent background */}
+      {/* Contact Section */}
       <motion.section 
         id="contact" 
         className="bg-blue-50/70 dark:bg-primary/5 py-16 scroll-mt-20"
